@@ -156,7 +156,7 @@ while true; do
     script_file="${file_name}.sh"
     
     # Kiểm tra nếu file hoặc thư mục đã tồn tại
-    if [ -d "$folder_name" ] || [ -f "$folder_name/$script_file" ]; then
+    if [ -d "$folder_name" ] || [ -f "$folder_name/$script_file" ]; thì
         echo "Thư mục hoặc file đã tồn tại. Vui lòng chọn tên khác."
     else
         break
@@ -179,10 +179,10 @@ while [ ! -s "$script_file" ] && [ $check_count -lt $max_check ]; do
     check_count=$((check_count + 1))
     echo "File $script_file rỗng (kiểm tra $check_count/$max_check)."
     
-    if [ $check_count -ge $max_check ]; then
+    nếu [ $check_count -ge $max_check ]; thì
         echo "File vẫn rỗng sau $max_check lần kiểm tra. Tiếp tục?"
         read -p "Tiếp tục (y) hoặc hủy (n): " continue_choice
-        if [[ "$continue_choice" != "y" && "$continue_choice" != "Y" ]]; then
+        nếu [[ "$continue_choice" != "y" && "$continue_choice" != "Y" ]]; thì
             echo "Hủy thao tác."
             exit 1
         fi
@@ -190,7 +190,7 @@ while [ ! -s "$script_file" ] && [ $check_count -lt $max_check ]; do
     fi
     
     read -p "Bạn có muốn mở lại editor không? (y/n): " open_again
-    if [[ "$open_again" == "y" || "$open_again" == "Y" ]]; then
+    nếu [[ "$open_again" == "y" || "$open_again" == "Y" ]]; thì
         nano "$script_file"
     else
         break
@@ -215,18 +215,18 @@ repo_attempt=1
 while [ $repo_attempt -le $max_repo_attempts ]; do
     read -p "Nhập URL repository GitHub của bạn: " repo_url
     
-    if check_github_connection "$repo_url"; then
-        if add_remote "$repo_url"; then
+    nếu check_github_connection "$repo_url"; thì
+        nếu add_remote "$repo_url"; thì
             break
         fi
     fi
     
-    if [ $repo_attempt -lt $max_repo_attempts ]; then
+    nếu [ $repo_attempt -lt $max_repo_attempts ]; thì
         echo "Thử lại với URL repository khác..."
     else
         echo "Đã thử $max_repo_attempts lần nhưng không thành công."
         read -p "Bạn có muốn tiếp tục thử không? (y/n): " continue_choice
-        if [[ "$continue_choice" == "y" || "$continue_choice" == "Y" ]]; then
+        nếu [[ "$continue_choice" == "y" || "$continue_choice" == "Y" ]]; thì
             repo_attempt=0
         else
             echo "Hủy thao tác."
@@ -253,7 +253,7 @@ diagnose_push_issues() {
     ping -c 3 github.com
     
     echo "4. Kiểm tra xác thực..."
-    if [ -n "$GITHUB_TOKEN" ]; then
+    nếu [ -n "$GITHUB_TOKEN" ]; thì
         echo "Token GitHub đã được thiết lập."
     else
         echo "Không tìm thấy token GitHub."
@@ -267,7 +267,7 @@ diagnose_push_issues() {
 
 # Push lên repository với xử lý lỗi
 echo "=== Đẩy lên GitHub ==="
-if push_to_github; then
+nếu push_to_github; thì
     # Thông báo hoàn tất
     echo "==============================================="
     echo "Đã đẩy script $script_file lên GitHub repository."
@@ -278,8 +278,8 @@ else
     
     # Hỏi người dùng có muốn chuẩn đoán sự cố
     read -p "Bạn có muốn chạy chức năng chuẩn đoán sự cố không? (y/n): " run_diagnosis
-    if [[ "$run_diagnosis" == "y" || "$run_diagnosis" == "Y" ]]; then
-        if diagnose_push_issues; then
+    nếu [[ "$run_diagnosis" == "y" || "$run_diagnosis" == "Y" ]]; thì
+        nếu diagnose_push_issues; thì
             echo "Đã đẩy lên GitHub thành công sau khi chuẩn đoán."
             exit 0
         fi
